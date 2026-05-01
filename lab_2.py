@@ -1,7 +1,7 @@
 """ Лабораторная работа 2, вариант 4 
  Таблица моноизотопных масс ак, в дальтонах """
 
-mass_table = {
+MASS_TABLE = {
     'A': 71.03711,
     'C': 103.00919,
     'D': 115.02694,
@@ -28,20 +28,20 @@ mass_table = {
 seq = input("Введите протеиновую последовательность: ").strip()
 
 # Проверка, что строка не пустая
-# unknown - найдена ли неизвестная ак
+# unknown_amino_acid - найдена ли неизвестная ак
 if seq:
     total_mass = 0.0
-    unknown = False
+    unknown_amino_acid = False
 
     # Проходим по каждой аминокислоте
     for amino_acid in seq:
-        if amino_acid in mass_table:
-            total_mass += mass_table[amino_acid]
+        if amino_acid in MASS_TABLE:
+            total_mass += MASS_TABLE[amino_acid]
         else:
             print(f"Неизвестная аминокислота: {amino_acid}")
-            unknown = True
+            unknown_amino_acid = True
             break
 
     # Если все аминокислоты известны, выводим результат
-    if not unknown:
+    if not unknown_amino_acid:
         print(f"Конечная масса равна: {total_mass}")

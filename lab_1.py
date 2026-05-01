@@ -1,4 +1,4 @@
-# Лабораторная работа 1, вариант 4
+""" Лабораторная работа 1, вариант 4"""
 
 import itertools
 
@@ -13,11 +13,11 @@ try:
         # range создает список от 1 до n
         numbers = list(range(1, n + 1))
         # itertools.permutations возвращает итератор со всеми вариантами
-        all = list(itertools.permutations(numbers))
+        all_numbers = list(itertools.permutations(numbers))
 
-        print(len(all))
+        print(len(all_numbers))
         # Выводим каждую перестановку, разделяя числа пробелом
-        for p in all:
+        for p in all_numbers:
             print(*p)
 
 except ValueError:

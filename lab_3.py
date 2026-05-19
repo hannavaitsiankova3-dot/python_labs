@@ -1,10 +1,11 @@
 """ Лабораторная работа 3, вариант 4 """
 # Задание 1
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
 from sklearn.datasets import load_breast_cancer
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+import pandas as pd
+import seaborn as sns
 
 # 1. Загрузка данных
 data = load_breast_cancer()
@@ -30,10 +31,6 @@ plt.show()
 
 # Задание 2
 
-import matplotlib.pyplot as plt
-import statsmodels.api as sm
-import pandas as pd
-import seaborn as sns
 
 # 1. Загрузка данных
 data = sm.datasets.grunfeld.load_pandas().data

@@ -1,3 +1,5 @@
+""""Модуль для получения CDS"""
+
 from Bio import SeqIO
 from Bio.Seq import UndefinedSequenceError
 
@@ -7,7 +9,7 @@ def fetch_cds_data(input_file):
     и возвращает список словарей с результатами.
     """
     results = []
-    
+
     try:
         records = list(SeqIO.parse(input_file, "genbank"))
     except FileNotFoundError:
@@ -15,7 +17,6 @@ def fetch_cds_data(input_file):
         return results
 
     for record in records:
-        # Пропускаем записи без последовательности
         try:
             if not record.seq or len(record.seq) == 0:
                 continue
@@ -27,14 +28,12 @@ def fetch_cds_data(input_file):
                 try:
                     # 1. Извлекаем нуклеотидную последовательность CDS
                     cds_seq = feature.extract(record.seq)
-                    
                     # 2. Транслируем в белок
                     protein_seq = cds_seq.translate(to_stop=True)
-                    
                     # 3. Получаем информацию о локации и цепи
                     location = feature.location
                     strand_val = location.strand
-                    
+
                     if strand_val == 1:
                         strand_str = "+"
                     elif strand_val == -1:
@@ -54,5 +53,5 @@ def fetch_cds_data(input_file):
 
                 except Exception as e:
                     print(f"Предупреждение: Ошибка при обработке CDS в {record.id}: {e}")
-                    
+
     return results

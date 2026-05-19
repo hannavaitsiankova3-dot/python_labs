@@ -1,1 +1,5 @@
 изуч.py
+.vscode/
+output/
+*.gb
+__pycache__/

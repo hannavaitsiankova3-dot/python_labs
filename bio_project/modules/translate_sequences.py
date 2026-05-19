@@ -1,4 +1,4 @@
-import os
+"""Транслация данных, запись в выходной файл"""
 
 def translate(data_list, output_file):
     """
@@ -8,10 +8,10 @@ def translate(data_list, output_file):
         print("Нет данных для сохранения.")
         return
 
-    with open(output_file, "w") as output_handle:
+    with open(output_file, "w", encoding="utf-8") as output_handle:
         for item in data_list:
             output_handle.write(f"{item['id']}: {item['description']}\n")
             output_handle.write(f"Coding sequence location={item['location']}({item['strand']})\n")
             output_handle.write(f"Translation=\n{item['translation']}\n\n")
-            
+
     print(f"Успешно сохранено {len(data_list)} записей в файл '{output_file}'")

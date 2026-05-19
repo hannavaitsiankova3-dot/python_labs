@@ -7,6 +7,8 @@ import statsmodels.api as sm
 import pandas as pd
 import seaborn as sns
 
+
+
 # 1. Загрузка данных
 data = load_breast_cancer()
 df = pd.DataFrame(data.data, columns=data.feature_names)
@@ -30,8 +32,6 @@ plt.show()
 
 
 # Задание 2
-
-
 # 1. Загрузка данных
 data = sm.datasets.grunfeld.load_pandas().data
 
@@ -39,7 +39,7 @@ data = sm.datasets.grunfeld.load_pandas().data
 # В наборе данных обычно есть столбец 'firm'. Выберем 3 уникальные фирмы.
 # Например, возьмём первые 3 уникальные фирмы, найденные в данных.
 unique_firms = data['firm'].unique()
-selected_firms = unique_firms[:3] 
+selected_firms = unique_firms[:3]
 
 # Фильтруем данные для этих 3 фирм
 df_filtered = data[data['firm'].isin(selected_firms)]

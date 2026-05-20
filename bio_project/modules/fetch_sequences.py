@@ -1,7 +1,9 @@
 """"Модуль для получения CDS"""
 
-from Bio import SeqIO
+from Bio import SeqIO, Entrez
 from Bio.Seq import UndefinedSequenceError
+
+Entrez.email = "hannavaitsiankova3@gmail.com"
 
 def fetch_cds_data(input_file):
     """
@@ -55,3 +57,67 @@ def fetch_cds_data(input_file):
                     print(f"Предупреждение: Ошибка при обработке CDS в {record.id}: {e}")
 
     return results
+
+
+def fetch_from_ncbi(accession_number, output_file="fetched_sequence.gb"):
+    """
+    Получает последовательность из NCBI по номеру аккессии
+    и сохраняет её в формате GenBank.
+    """
+    try:
+        print(f"Получаю последовательность {accession_number} из NCBI...")
+        
+        handle = Entrez.efetch(
+            db="nucleotide", 
+            id=accession_number, 
+            rettype="gb",  # GenBank формат
+            retmode="text"
+        )
+        
+        # Парсим результат
+        record = SeqIO.read(handle, "genbank")
+        handle.close()
+        
+        # Сохраняем в файл
+        SeqIO.write(record, output_file, "genbank")
+        print(f"✓ Последовательность сохранена в {output_file}")
+        print(f"  ID: {record.id}")
+        print(f"  Длина: {len(record.seq)} нуклеотидов")
+        print(f"  Описание: {record.description}")
+        
+        return record
+        
+    except Exception as e:
+        print(f"Ошибка при получении последовательности: {e}")
+        return None
+
+
+def fetch_sequences(accession_list: list, output_file="fetched_sequence.gb"):
+    """
+    Получает несколько последовательностей из NCBI
+    и сохраняет их в один файл.
+    """
+    records = []
+    
+    for accession in accession_list:
+        try:
+            print(f"Получаю {accession}...")
+            handle = Entrez.efetch(
+                db="nucleotide",
+                id=accession,
+                rettype="gb",
+                retmode="text"
+            )
+            record = SeqIO.read(handle, "genbank")
+            handle.close()
+            records.append(record)
+            print(f"  ✓ {accession} получена ({len(record.seq)} нуклеотидов)")
+            
+        except Exception as e:
+            print(f"  ✗ Ошибка при получении {accession}: {e}")
+    
+    if records:
+        SeqIO.write(records, output_file, "genbank")
+        print(f"\n✓ {len(records)} последовательность(й) сохранена(ны) в {output_file}")
+    
+    return records

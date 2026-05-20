@@ -27,7 +27,7 @@ def analyze(input_file, output_file):
             print(f"Содержимое последовательности {record.id} не определено")
             continue
     gc_list.sort(key=lambda x: x[0])
-
+    
     with open(output_file, "w",encoding="utf-8") as output_handle:
         for _, line in gc_list:
             output_handle.write(line+'\n')
